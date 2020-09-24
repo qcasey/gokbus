@@ -88,9 +88,9 @@ const (
 )
 
 // PacketTranslateMap maps a packet's SRC / DEST / DATA (flattened into string) into a generic meaning for easier parsing
-var PacketTranslateMap = map[string]map[string]map[string]PacketMessageMeaning{
-	"00": {
-		"BF": {
+var PacketTranslateMap = map[byte]map[byte]map[string]PacketMessageMeaning{
+	0x00: {
+		0xBF: {
 			"0200B9": CarUnlocked,       // Unlocked via key
 			"1100":   IgnitionOff,       // Engine off
 			"7202":   KeyButtonReleased, // Key, no button pressed (released)
@@ -102,19 +102,19 @@ var PacketTranslateMap = map[string]map[string]map[string]PacketMessageMeaning{
 		},
 	},
 
-	"3F": {
-		"00": {
+	0x3F: {
+		0x00: {
 			"0C3401": CarUnlocked, // All doors unlocked
 			"0C4601": PassengerDoorLocked,
 			"0C4701": DriverDoorLocked,
 			"OTHER":  Diagnostic,
 		},
 	},
-	"44": { // EWS Ignition / Immobilizer
-		"80": {
+	0x44: { // EWS Ignition / Immobilizer
+		0x80: {
 			"16": OdometerRequest, // Odometer request
 		},
-		"BF": { // Global
+		0xBF: { // Global
 			"7404":   KeyDetected,    // Last byte is key //
 			"740500": KeyIn,          // Key in, to 2nd position
 			"7401FF": KeyOut,         // No_key_detected - Triggred by pulling the key out
@@ -123,12 +123,12 @@ var PacketTranslateMap = map[string]map[string]map[string]PacketMessageMeaning{
 			//"7A" : "d_windowDoorMessage"
 		},
 	},
-	"50": { // MF Steering Wheel Buttons
-		"5B": {
+	0x50: { // MF Steering Wheel Buttons
+		0x5B: {
 			"3A01": RecirculatingAirPressed,  // AUC - recirculating air pressed
 			"3A00": RecirculatingAirReleased, // AUC - recirculating air released
 		},
-		"68": { // RADIO
+		0x68: { // RADIO
 			"3210": RadioVolumeDown, // Volume Down
 			"3211": RadioVolumeUp,   // Volume Up
 			"3B01": SteeringWheelNextPressed,
@@ -138,7 +138,7 @@ var PacketTranslateMap = map[string]map[string]map[string]PacketMessageMeaning{
 			"3B18": SteeringWheelPreviousPresssedLong, // Prev, long press
 			"3B28": SteeringWheelPreviousReleased,     // Prev Released
 		},
-		"C8": {
+		0xC8: {
 			"01":   SteeringWheelRTPressed, // This can happen via RT button or ignition
 			"019A": SteeringWheelRTPressed, // RT button?
 			// "3B40" :  // reset
@@ -146,18 +146,18 @@ var PacketTranslateMap = map[string]map[string]map[string]PacketMessageMeaning{
 			"3B90": SteeringWheelSpeakPressedLong, // Dial button, long press
 			"3BA0": SteeringWheelDialReleased,     // Dial button, released
 		},
-		"FF": {
+		0xFF: {
 			"3B40": SteeringWheelRTPressed, // also RT Button?
 			"3B00": SteeringWheelRTPressed,
 		},
 	},
-	"5B": {
-		"80": {
+	0x5B: {
+		0x80: {
 			"*": ClimateControl,
 		},
 	},
-	"68": {
-		"18": {
+	0x68: {
+		0x18: {
 			"380000": RadioCDStatus, // d_cdSendStatus
 			//"380100" : None,
 			//"380300" : None,
@@ -177,16 +177,16 @@ var PacketTranslateMap = map[string]map[string]map[string]PacketMessageMeaning{
 			//"380801" : None
 		},
 	},
-	"72": {
-		"BF": {
+	0x72: {
+		0xBF: {
 			"780000": SeatMemoryAny, // One of the seat memory buttons were pushed
 			"780100": SeatMemory1,   // Button 1 released
 			"780200": SeatMemory2,   // Button 2 released
 			"780400": SeatMemory3,   // Button 3 released
 		},
 	},
-	"80": {
-		"68": { // Radio buttons
+	0x80: {
+		0x68: { // Radio buttons
 			"31000007": RadioSeekNextPressed,  // Seek > pressed
 			"31000047": RadioSeekNextReleased, // Seek > released
 			"31000006": RadioSeekPrevPressed,  // Seek < pressed
@@ -200,45 +200,45 @@ var PacketTranslateMap = map[string]map[string]map[string]PacketMessageMeaning{
 			"3100000E": RadioSCRPPressed,      // SC/RP pressed
 			"3100004E": RadioSCRPReleased,     // SC/RP released
 		},
-		"BF": {
+		0xBF: {
 			"0201":  RadioReady, // Device status ready after Reset
 			"OTHER": IkeStatus,  // Use ALL to send all data to a particular function
 		},
-		"E7": {
+		0xE7: {
 			"2A0000": AuxHeatingOff, // NAVCODER - Not totally sure what this refers to ("Aux_Heating_LED = Off")
 		},
 	},
-	"9C": { // Technically Sunroof module, operates w/ convertible tops
-		"BF": {
+	0x9C: { // Technically Sunroof module, operates w/ convertible tops
+		0xBF: {
 			"7C0174": TopClosed,
 		},
 	},
-	"C0": { // telephone module
-		"80": { // IKE
+	0xC0: { // telephone module
+		0x80: { // IKE
 			"234220": SteeringWheelRTPressed, // Telephone invoked (from steering wheel?)
 		},
-		"68": {
+		0x68: {
 			"3100000B": RadioModePressed,  // Mode button pressed
 			"3100134B": RadioModeReleased, // Mode button released
 		},
 	},
-	"D0": {
-		"80": { // Vehicle Data, in response to request
+	0xD0: {
+		0x80: { // Vehicle Data, in response to request
 			"*": VehicleStatus,
 		},
-		"BF": {
+		0xBF: {
 			"5B6100040001": AllLightsTurnedOn,  // lights turned on (including interior)
 			"5B0100000001": AllLightsTurnedOff, // lights turned off (including interior)
 			"5B6000040000": AllLightsOK,        // Indicator_Left Indicator_Right Indicator_sync  All_OK
 		},
 	},
-	"E8": {
-		"D0": {
+	0xE8: {
+		0xD0: {
 			"*": RainLightSensorStatus,
 		},
 	},
-	"F0": { // Board Monitor Buttons
-		"68": { // Radio
+	0xF0: { // Board Monitor Buttons
+		0x68: { // Radio
 			"4806": RadioPowerToggled, // Radio power toggled
 		},
 	},
