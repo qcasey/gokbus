@@ -48,10 +48,10 @@ func main() {
 		Source:      0x3F,
 		Destination: 0x00,
 		Data:        []byte{0x0C, 0x02, 0x01},
-    }
-    
-    // alternatively, a list of known packets are provided in /pkg/prepackets
-    // flashLowBeamsPacket := prepackets.FlashLowBeams
+	}
+	
+	// alternatively, a list of known packets are provided in /pkg/prepackets
+	// flashLowBeamsPacket := prepackets.FlashLowBeams
 
 	// Block until packet is written to the bus
 	kbus.WriteChannel <- openTrunkPacket
