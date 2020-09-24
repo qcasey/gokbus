@@ -2,7 +2,8 @@ package prepackets
 
 import "github.com/qcasey/gokbus"
 
-var requestToPacket = map[string][]gokbus.Packet{
+// RequestToPacket maps a string to a slice of relevant packets
+var RequestToPacket = map[string][]gokbus.Packet{
 	"PressMode":                 PressMode,
 	"PressNum1":                 PressNum1,
 	"PressNum2":                 PressNum2,
