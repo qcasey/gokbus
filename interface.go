@@ -1,6 +1,7 @@
 package gokbus
 
 import (
+	"fmt"
 	"time"
 
 	"github.com/tarm/serial"
@@ -45,16 +46,21 @@ func New(devicePath string, baudrate int) (*KBUS, error) {
 
 // Start will block, reading and writing packets to the KBus with the provided channels
 func (kbus *KBUS) Start() {
+	fmt.Println("starting")
 	for {
-		kbus.ReadChannel <- kbus.ReadPacket()
+		newPacket, readyForWrite, err := kbus.ReadPacket()
+		if err == nil {
+			kbus.ReadChannel <- newPacket
+		}
 
-		// We know the bus is open if we just read a packet, so write is now viable
-		select {
-		case p := <-kbus.WriteChannel:
-			p.addLength().addChecksum() // ensure metadata is valid
-			kbus.WritePacket(p)
-		default:
-			continue
+		if readyForWrite {
+			select {
+			case p := <-kbus.WriteChannel:
+				p.addLength().addChecksum() // ensure metadata is valid
+				kbus.WritePacket(p)
+			default:
+				continue
+			}
 		}
 	}
 }
@@ -64,16 +70,22 @@ func (kbus *KBUS) Close() {
 	kbus.Port.Close()
 }
 
-// ReadPacket will block until it returns the next Packet read from the KBus
-func (kbus *KBUS) ReadPacket() Packet {
+// ReadPacket will block until it either recieves the next Packet or times out because of an empty bus
+func (kbus *KBUS) ReadPacket() (Packet, bool, error) {
+	var err error
 	p := Packet{}
-	p.Source = kbus.getSourceByte()
+
+	p.Source, err = kbus.getSourceByte()
+	if err != nil {
+		return p, true, err
+	}
+
 	p.length = kbus.readBytes()[0]
 	p.Destination = kbus.readBytes()[0]
 	p.Data = kbus.getDataBytes(int(p.length) - 2)
 	p.checksum = kbus.readBytes()[0]
 
-	return p
+	return p, true, nil
 }
 
 // WritePacket will attempt to write a packet to the kbus
