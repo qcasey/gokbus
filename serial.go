@@ -9,8 +9,8 @@ import (
 func (kbus *KBUS) getSourceByte() (byte, error) {
 	var lastByteRecievedTime = time.Now()
 	for {
-		srcPacket := kbus.readBytes()
-		if len(srcPacket) == 0 {
+		srcPacket, err := kbus.readBytes()
+		if len(srcPacket) == 0 || err != nil {
 			return 0, fmt.Errorf("Bus is empty")
 		}
 		if time.Since(lastByteRecievedTime) > time.Millisecond*10 {
@@ -22,15 +22,19 @@ func (kbus *KBUS) getSourceByte() (byte, error) {
 }
 
 // Gets the remaining packets in this data stream
-func (kbus *KBUS) getDataBytes(len int) []byte {
+func (kbus *KBUS) getDataBytes(length int) []byte {
 	var returnBytes []byte
-	for i := 0; i < len; i++ {
-		returnBytes = append(returnBytes, kbus.readBytes()[0])
+	for i := 0; i < length; i++ {
+		newByte, err := kbus.readBytes()
+		if err != nil || len(newByte) == 0 {
+			continue
+		}
+		returnBytes = append(returnBytes, newByte[0])
 	}
 	return returnBytes
 }
 
-func (kbus *KBUS) readBytes() []byte {
+func (kbus *KBUS) readBytes() ([]byte, error) {
 	buf := make([]byte, 32)
 	var (
 		n   int
@@ -42,12 +46,12 @@ func (kbus *KBUS) readBytes() []byte {
 	for {
 		n, err = kbus.Port.Read(buf)
 		if time.Since(timeout) > time.Millisecond*500 {
-			return []byte{}
+			return buf, fmt.Errorf("Timed out reading kbus, the bus is likely quiet")
 		}
 		if err == nil {
 			break
 		}
 	}
 
-	return buf[:n]
+	return buf[:n], nil
 }

@@ -48,19 +48,17 @@ func New(devicePath string, baudrate int) (*KBUS, error) {
 func (kbus *KBUS) Start() {
 	fmt.Println("starting")
 	for {
-		newPacket, readyForWrite, err := kbus.ReadPacket()
+		newPacket, err := kbus.ReadPacket()
 		if err == nil {
 			kbus.ReadChannel <- newPacket
 		}
 
-		if readyForWrite {
-			select {
-			case p := <-kbus.WriteChannel:
-				p.addLength().addChecksum() // ensure metadata is valid
-				kbus.WritePacket(p)
-			default:
-				continue
-			}
+		select {
+		case p := <-kbus.WriteChannel:
+			p.addLength().addChecksum() // ensure metadata is valid
+			kbus.WritePacket(p)
+		default:
+			continue
 		}
 	}
 }
@@ -71,21 +69,36 @@ func (kbus *KBUS) Close() {
 }
 
 // ReadPacket will block until it either recieves the next Packet or times out because of an empty bus
-func (kbus *KBUS) ReadPacket() (Packet, bool, error) {
+func (kbus *KBUS) ReadPacket() (Packet, error) {
 	var err error
 	p := Packet{}
 
 	p.Source, err = kbus.getSourceByte()
 	if err != nil {
-		return p, true, err
+		return p, err
 	}
 
-	p.length = kbus.readBytes()[0]
-	p.Destination = kbus.readBytes()[0]
-	p.Data = kbus.getDataBytes(int(p.length) - 2)
-	p.checksum = kbus.readBytes()[0]
+	length, err := kbus.readBytes()
+	if err != nil {
+		return p, err
+	}
+	p.length = length[0]
 
-	return p, true, nil
+	destination, err := kbus.readBytes()
+	if err != nil {
+		return p, err
+	}
+	p.Destination = destination[0]
+
+	p.Data = kbus.getDataBytes(int(p.length) - 2)
+
+	checksum, err := kbus.readBytes()
+	if err != nil {
+		return p, err
+	}
+	p.checksum = checksum[0]
+
+	return p, nil
 }
 
 // WritePacket will attempt to write a packet to the kbus
