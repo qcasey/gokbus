@@ -5,13 +5,13 @@ import "github.com/qcasey/gokbus"
 
 var PressMode = []gokbus.Packet{
 	// PUSH
-	gokbus.Packet{
+	{
 		Source:      0xF0,
 		Destination: 0x68,
 		Data:        []byte{0x48, 0x23},
 	},
 	// RELEASE
-	gokbus.Packet{
+	{
 		Source:      0xF0,
 		Destination: 0x68,
 		Data:        []byte{0x48, 0xA3},
@@ -20,13 +20,13 @@ var PressMode = []gokbus.Packet{
 
 var PressNum1 = []gokbus.Packet{
 	// PUSH
-	gokbus.Packet{
+	{
 		Source:      0xF0,
 		Destination: 0x68,
 		Data:        []byte{0x48, 0x11},
 	},
 	// RELEASE
-	gokbus.Packet{
+	{
 		Source:      0xF0,
 		Destination: 0x68,
 		Data:        []byte{0x48, 0x91},
@@ -35,13 +35,13 @@ var PressNum1 = []gokbus.Packet{
 
 var PressNum2 = []gokbus.Packet{
 	// PUSH
-	gokbus.Packet{
+	{
 		Source:      0xF0,
 		Destination: 0x68,
 		Data:        []byte{0x48, 0x01},
 	},
 	// RELEASE
-	gokbus.Packet{
+	{
 		Source:      0xF0,
 		Destination: 0x68,
 		Data:        []byte{0x48, 0x81},
@@ -50,13 +50,13 @@ var PressNum2 = []gokbus.Packet{
 
 var PressNum3 = []gokbus.Packet{
 	// PUSH
-	gokbus.Packet{
+	{
 		Source:      0xF0,
 		Destination: 0x68,
 		Data:        []byte{0x48, 0x12},
 	},
 	// RELEASE
-	gokbus.Packet{
+	{
 		Source:      0xF0,
 		Destination: 0x68,
 		Data:        []byte{0x48, 0x92},
@@ -65,13 +65,13 @@ var PressNum3 = []gokbus.Packet{
 
 var PressNum4 = []gokbus.Packet{
 	// PUSH
-	gokbus.Packet{
+	{
 		Source:      0xF0,
 		Destination: 0x68,
 		Data:        []byte{0x48, 0x02},
 	},
 	// RELEASE
-	gokbus.Packet{
+	{
 		Source:      0xF0,
 		Destination: 0x68,
 		Data:        []byte{0x48, 0x82},
@@ -80,13 +80,13 @@ var PressNum4 = []gokbus.Packet{
 
 var PressNum5 = []gokbus.Packet{
 	// PUSH
-	gokbus.Packet{
+	{
 		Source:      0xF0,
 		Destination: 0x68,
 		Data:        []byte{0x48, 0x13},
 	},
 	// RELEASE
-	gokbus.Packet{
+	{
 		Source:      0xF0,
 		Destination: 0x68,
 		Data:        []byte{0x48, 0x93},
@@ -95,13 +95,13 @@ var PressNum5 = []gokbus.Packet{
 
 var PressNum6 = []gokbus.Packet{
 	// PUSH
-	gokbus.Packet{
+	{
 		Source:      0xF0,
 		Destination: 0x68,
 		Data:        []byte{0x48, 0x03},
 	},
 	// RELEASE
-	gokbus.Packet{
+	{
 		Source:      0xF0,
 		Destination: 0x68,
 		Data:        []byte{0x48, 0x83},
@@ -110,13 +110,13 @@ var PressNum6 = []gokbus.Packet{
 
 var PressAM = []gokbus.Packet{
 	// PUSH
-	gokbus.Packet{
+	{
 		Source:      0xF0,
 		Destination: 0x68,
 		Data:        []byte{0x48, 0x31},
 	},
 	// RELEASE
-	gokbus.Packet{
+	{
 		Source:      0xF0,
 		Destination: 0x68,
 		Data:        []byte{0x48, 0xA1},
@@ -125,13 +125,13 @@ var PressAM = []gokbus.Packet{
 
 var PressFM = []gokbus.Packet{
 	// PUSH
-	gokbus.Packet{
+	{
 		Source:      0xF0,
 		Destination: 0x68,
 		Data:        []byte{0x48, 0x31},
 	},
 	// RELEASE
-	gokbus.Packet{
+	{
 		Source:      0xF0,
 		Destination: 0x68,
 		Data:        []byte{0x48, 0xB1},
@@ -140,13 +140,13 @@ var PressFM = []gokbus.Packet{
 
 var PressNext = []gokbus.Packet{
 	// PUSH
-	gokbus.Packet{
+	{
 		Source:      0xF0,
 		Destination: 0x68,
 		Data:        []byte{0x48, 0x00},
 	},
 	// RELEASE
-	gokbus.Packet{
+	{
 		Source:      0xF0,
 		Destination: 0x68,
 		Data:        []byte{0x48, 0x80},
@@ -155,13 +155,13 @@ var PressNext = []gokbus.Packet{
 
 var PressPrev = []gokbus.Packet{
 	// PUSH
-	gokbus.Packet{
+	{
 		Source:      0xF0,
 		Destination: 0x68,
 		Data:        []byte{0x48, 0x10},
 	},
 	// RELEASE
-	gokbus.Packet{
+	{
 		Source:      0xF0,
 		Destination: 0x68,
 		Data:        []byte{0x48, 0x90},
@@ -170,13 +170,13 @@ var PressPrev = []gokbus.Packet{
 
 var PressStereoPower = []gokbus.Packet{
 	// PUSH
-	gokbus.Packet{
+	{
 		Source:      0xF0,
 		Destination: 0x68,
 		Data:        []byte{0x48, 0x06},
 	},
 	// RELEASE
-	gokbus.Packet{
+	{
 		Source:      0xF0,
 		Destination: 0x68,
 		Data:        []byte{0x48, 0x86},
@@ -185,13 +185,13 @@ var PressStereoPower = []gokbus.Packet{
 
 var PressRecirculatingAir = []gokbus.Packet{
 	// PUSH
-	gokbus.Packet{
+	{
 		Source:      0xF0,
 		Destination: 0x68,
 		Data:        []byte{0x48, 0x01},
 	},
 	// RELEASE
-	gokbus.Packet{
+	{
 		Source:      0xF0,
 		Destination: 0x68,
 		Data:        []byte{0x48, 0x00},
@@ -204,7 +204,7 @@ var OpenTrunk = gokbus.Packet{
 	Data:        []byte{0x0C, 0x02, 0x01},
 }
 
-// Turns on the clown nose for 3 seconds
+// TurnOnClownNose for 3 seconds
 var TurnOnClownNose = gokbus.Packet{
 	Source:      0x3F,
 	Destination: 0x00,
@@ -325,56 +325,56 @@ var RequestTemperatureStatus = gokbus.Packet{
 	Data:        []byte{0x1D},
 }
 
-// Roll windows up about 40%
+// PopWindowsUp about 40%
 var PopWindowsUp = []gokbus.Packet{
 	// Window 1
-	gokbus.Packet{
+	{
 		Source:      0x3F,
 		Destination: 0x00,
 		Data:        []byte{0x0C, 0x53, 0x01},
 	},
 	// Window 2
-	gokbus.Packet{
+	{
 		Source:      0x3F,
 		Destination: 0x00,
 		Data:        []byte{0x0C, 0x55, 0x01},
 	},
 	// Window 3
-	gokbus.Packet{
+	{
 		Source:      0x3F,
 		Destination: 0x00,
 		Data:        []byte{0x0C, 0x42, 0x01},
 	},
 	// Window 4
-	gokbus.Packet{
+	{
 		Source:      0x3F,
 		Destination: 0x00,
 		Data:        []byte{0x0C, 0x43, 0x01},
 	},
 }
 
-// Roll windows down about 40%
+// PopWindowsDown about 40%
 var PopWindowsDown = []gokbus.Packet{
 	// Window 1
-	gokbus.Packet{
+	{
 		Source:      0x3F,
 		Destination: 0x00,
 		Data:        []byte{0x0C, 0x52, 0x01},
 	},
 	// Window 2
-	gokbus.Packet{
+	{
 		Source:      0x3F,
 		Destination: 0x00,
 		Data:        []byte{0x0C, 0x54, 0x01},
 	},
 	// Window 3
-	gokbus.Packet{
+	{
 		Source:      0x3F,
 		Destination: 0x00,
 		Data:        []byte{0x0C, 0x41, 0x01},
 	},
 	// Window 4
-	gokbus.Packet{
+	{
 		Source:      0x3F,
 		Destination: 0x00,
 		Data:        []byte{0x0C, 0x44, 0x01},
