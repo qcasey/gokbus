@@ -1,8 +1,8 @@
 # Go KBUS
 
-Go KBus is a golang module designed to interface with the BMW I/K Bus. 
+Go KBus is a golang module designed to interface with the BMW I/K Bus. This protocol is similar to CAN, and controls the non-essential components in the car.
 
-It can be used to write, read, and interpret serial commands on this particular wire. It's loosely based on ezeakeal's excellent [pyBus](https://github.com/ezeakeal/pyBus) \(and my subsequent [fork](https://github.com/qcasey/pyBus)\).
+This module can be used to read, write, and interpret BMW serial commands. It's loosely based on ezeakeal's excellent [pyBus](https://github.com/ezeakeal/pyBus) \(and my subsequent [fork](https://github.com/qcasey/pyBus)\).
 
 ## Overview
 * USB serial interface can be acquired from [Reslers.de](http://www.reslers.de/IBUS/). Other USB interfaces should work just as well, although are untested. 
