@@ -71,5 +71,5 @@ Missing write confirmation that pyBus offers
 
 ### Useful links
 http://web.archive.org/web/20041204074622/www.openbmw.org/bus/  
-http://web.comhem.se/bengt-olof.swing/ibusdevicesandoperations.htm   
-http://www.online-rubin.de/BMW/I-Bus/I-BUS%20Codes%20e46.htm 
+https://web.archive.org/web/20190210133920/http://web.comhem.se/bengt-olof.swing/ibusdevicesandoperations.htm   
+https://web.archive.org/web/20180511152050/http://www.online-rubin.de/BMW/I-Bus/I-BUS%20Codes%20e46.htm
