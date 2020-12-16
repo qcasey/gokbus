@@ -10,6 +10,12 @@ var PressMode = []gokbus.Packet{
 		Destination: 0x68,
 		Data:        []byte{0x48, 0x23},
 	},
+	// HOLD
+	{
+		Source:      0xF0,
+		Destination: 0x68,
+		Data:        []byte{0x48, 0x63},
+	},
 	// RELEASE
 	{
 		Source:      0xF0,
@@ -24,6 +30,12 @@ var PressNum1 = []gokbus.Packet{
 		Source:      0xF0,
 		Destination: 0x68,
 		Data:        []byte{0x48, 0x11},
+	},
+	// HOLD
+	{
+		Source:      0xF0,
+		Destination: 0x68,
+		Data:        []byte{0x48, 0x51},
 	},
 	// RELEASE
 	{
@@ -40,6 +52,12 @@ var PressNum2 = []gokbus.Packet{
 		Destination: 0x68,
 		Data:        []byte{0x48, 0x01},
 	},
+	// HOLD
+	{
+		Source:      0xF0,
+		Destination: 0x68,
+		Data:        []byte{0x48, 0x41},
+	},
 	// RELEASE
 	{
 		Source:      0xF0,
@@ -54,6 +72,12 @@ var PressNum3 = []gokbus.Packet{
 		Source:      0xF0,
 		Destination: 0x68,
 		Data:        []byte{0x48, 0x12},
+	},
+	// HOLD
+	{
+		Source:      0xF0,
+		Destination: 0x68,
+		Data:        []byte{0x48, 0x52},
 	},
 	// RELEASE
 	{
@@ -70,6 +94,12 @@ var PressNum4 = []gokbus.Packet{
 		Destination: 0x68,
 		Data:        []byte{0x48, 0x02},
 	},
+	// HOLD
+	{
+		Source:      0xF0,
+		Destination: 0x68,
+		Data:        []byte{0x48, 0x42},
+	},
 	// RELEASE
 	{
 		Source:      0xF0,
@@ -84,6 +114,12 @@ var PressNum5 = []gokbus.Packet{
 		Source:      0xF0,
 		Destination: 0x68,
 		Data:        []byte{0x48, 0x13},
+	},
+	// HOLD
+	{
+		Source:      0xF0,
+		Destination: 0x68,
+		Data:        []byte{0x48, 0x53},
 	},
 	// RELEASE
 	{
@@ -100,6 +136,12 @@ var PressNum6 = []gokbus.Packet{
 		Destination: 0x68,
 		Data:        []byte{0x48, 0x03},
 	},
+	// HOLD
+	{
+		Source:      0xF0,
+		Destination: 0x68,
+		Data:        []byte{0x48, 0x43},
+	},
 	// RELEASE
 	{
 		Source:      0xF0,
@@ -114,6 +156,12 @@ var PressAM = []gokbus.Packet{
 		Source:      0xF0,
 		Destination: 0x68,
 		Data:        []byte{0x48, 0x31},
+	},
+	// HOLD
+	{
+		Source:      0xF0,
+		Destination: 0x68,
+		Data:        []byte{0x48, 0x61},
 	},
 	// RELEASE
 	{
@@ -130,6 +178,12 @@ var PressFM = []gokbus.Packet{
 		Destination: 0x68,
 		Data:        []byte{0x48, 0x31},
 	},
+	// HOLD
+	{
+		Source:      0xF0,
+		Destination: 0x68,
+		Data:        []byte{0x48, 0x71},
+	},
 	// RELEASE
 	{
 		Source:      0xF0,
@@ -144,6 +198,12 @@ var PressNext = []gokbus.Packet{
 		Source:      0xF0,
 		Destination: 0x68,
 		Data:        []byte{0x48, 0x00},
+	},
+	// HOLD
+	{
+		Source:      0xF0,
+		Destination: 0x68,
+		Data:        []byte{0x48, 0x40},
 	},
 	// RELEASE
 	{
@@ -160,6 +220,12 @@ var PressPrev = []gokbus.Packet{
 		Destination: 0x68,
 		Data:        []byte{0x48, 0x10},
 	},
+	// HOLD
+	{
+		Source:      0xF0,
+		Destination: 0x68,
+		Data:        []byte{0x48, 0x50},
+	},
 	// RELEASE
 	{
 		Source:      0xF0,
@@ -174,6 +240,12 @@ var PressStereoPower = []gokbus.Packet{
 		Source:      0xF0,
 		Destination: 0x68,
 		Data:        []byte{0x48, 0x06},
+	},
+	// HOLD
+	{
+		Source:      0xF0,
+		Destination: 0x68,
+		Data:        []byte{0x48, 0x46},
 	},
 	// RELEASE
 	{
