@@ -85,6 +85,7 @@ const (
 	Diagnostic
 	OdometerRequest
 	VehicleStatus
+	Undefined
 )
 
 // PacketTranslateMap maps a packet's SRC / DEST / DATA (flattened into string) into a generic meaning for easier parsing
