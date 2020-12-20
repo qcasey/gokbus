@@ -86,6 +86,7 @@ const (
 	OdometerRequest
 	VehicleStatus
 	TemperatureStatus
+	Sensors
 	Undefined
 )
 
@@ -203,6 +204,7 @@ var PacketTranslateMap = map[byte]map[byte]map[string]PacketMessageMeaning{
 			"3100004E": RadioSCRPReleased,     // SC/RP released
 		},
 		0xBF: {
+			"13":   Sensors,
 			"19":   TemperatureStatus,
 			"0201": RadioReady, // Device status ready after Reset
 			"*":    IkeStatus,  // Use ALL to send all data to a particular function
