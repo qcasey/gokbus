@@ -19,11 +19,12 @@ const (
 	TopOpen
 
 	KeyDetected
+	KeyNotDetected
 	KeyIn
 	KeyOut
 	KeyButtonReleased
-	KeyNotDetected
 
+	ClimateControl
 	RecirculatingAirPressed
 	RecirculatingAirReleased
 	AuxHeatingOff
@@ -58,8 +59,6 @@ const (
 	RadioReady
 	RadioPowerToggled
 
-	IkeStatus
-
 	RainLightSensorStatus
 	AllLightsTurnedOff
 	AllLightsTurnedOn
@@ -73,19 +72,14 @@ const (
 	SteeringWheelNextPressed
 	SteeringWheelNextPressedLong
 	SteeringWheelNextReleased
-
 	SteeringWheelPreviousPressed
 	SteeringWheelPreviousPresssedLong
 	SteeringWheelPreviousReleased
-
 	SteeringWheelSpeakPressed
 	SteeringWheelSpeakPressedLong
 	SteeringWheelSpeakReleased
-
 	SteeringWheelRTPressed
 	SteeringWheelDialReleased
-
-	ClimateControl
 
 	IgnitionOff
 	Diagnostic
@@ -97,6 +91,8 @@ const (
 	SpeedRPMStatus
 	RangeStatus
 	SensorStatus
+	IkeStatus
+
 	Undefined
 )
 
