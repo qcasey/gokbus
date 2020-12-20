@@ -1,5 +1,11 @@
 package translations
 
+import (
+	"fmt"
+
+	"github.com/qcasey/gokbus"
+)
+
 // PacketMessageMeaning will define a generic meaning we can assign to Data packets
 type PacketMessageMeaning uint
 
@@ -255,4 +261,30 @@ var PacketTranslateMap = map[byte]map[byte]map[string]PacketMessageMeaning{
 			"4806": RadioPowerToggled, // Radio power toggled
 		},
 	},
+}
+
+// GetMeaning will interpret a packet's data using PacketTranslateMap (SRC, DEST, DATA)
+// Accounts for fuzzy data matches. For example, 80 06 BF 13 E0 B1 00 7B will match to "SensorStatus" (0x80 0xBF "13")
+// It will default to a wildcard (*) data matcther if no more specific matcher exists
+// PacketMessageMeaning will be Undefined on error
+func GetMeaning(p *gokbus.Packet) (PacketMessageMeaning, error) {
+	if !p.IsValid() {
+		return Undefined, fmt.Errorf("Invald packet")
+	}
+	data := fmt.Sprintf("%02X", p.Data)
+
+	// Check entire packet meaning
+	packetMeaning, ok := PacketTranslateMap[p.Source][p.Destination][data]
+	if ok {
+		return packetMeaning, nil
+	}
+
+	for key, meaning := range PacketTranslateMap[p.Source][p.Destination] {
+		// Check for sub-byte meaning, catch-all data packets
+		if len(key) <= len(data) && (key == data[0:len(key)] || key == "*") {
+			return meaning, nil
+		}
+	}
+
+	return Undefined, fmt.Errorf("No associated meaning for packet data %s", data)
 }
