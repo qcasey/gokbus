@@ -85,6 +85,7 @@ const (
 	Diagnostic
 	OdometerRequest
 	VehicleStatus
+	TemperatureStatus
 	Undefined
 )
 
@@ -108,7 +109,7 @@ var PacketTranslateMap = map[byte]map[byte]map[string]PacketMessageMeaning{
 			"0C3401": CarUnlocked, // All doors unlocked
 			"0C4601": PassengerDoorLocked,
 			"0C4701": DriverDoorLocked,
-			"OTHER":  Diagnostic,
+			"*":      Diagnostic,
 		},
 	},
 	0x44: { // EWS Ignition / Immobilizer
@@ -202,9 +203,9 @@ var PacketTranslateMap = map[byte]map[byte]map[string]PacketMessageMeaning{
 			"3100004E": RadioSCRPReleased,     // SC/RP released
 		},
 		0xBF: {
+			"19":   TemperatureStatus,
 			"0201": RadioReady, // Device status ready after Reset
-			//"13": Sensors
-			"OTHER": IkeStatus, // Use ALL to send all data to a particular function
+			"*":    IkeStatus,  // Use ALL to send all data to a particular function
 		},
 		0xE7: {
 			"2A0000": AuxHeatingOff, // NAVCODER - Not totally sure what this refers to ("Aux_Heating_LED = Off")
