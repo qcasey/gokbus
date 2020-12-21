@@ -222,6 +222,9 @@ var PacketTranslateMap = map[byte]map[byte]map[string]PacketMessageMeaning{
 		0xE7: {
 			"2A0000": AuxHeatingOff, // NAVCODER - Not totally sure what this refers to ("Aux_Heating_LED = Off")
 		},
+		0xFF: {
+			"*": IkeStatus,
+		},
 	},
 	0x9C: { // Technically Sunroof module, operates w/ convertible tops
 		0xBF: {
