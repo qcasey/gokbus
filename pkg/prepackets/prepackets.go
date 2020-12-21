@@ -350,7 +350,7 @@ var LockPassengerDoor = gokbus.Packet{
 }
 
 var RequestDoorStatus = gokbus.Packet{
-	Source:      0x9C,
+	Source:      0xF0,
 	Destination: 0x00,
 	Data:        []byte{0x79},
 }
