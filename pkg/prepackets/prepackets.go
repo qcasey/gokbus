@@ -3,6 +3,7 @@ package prepackets
 
 import "github.com/qcasey/gokbus"
 
+// May need confirmation Rad is alive
 var PressMode = []gokbus.Packet{
 	// PUSH
 	{
