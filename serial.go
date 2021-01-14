@@ -51,9 +51,5 @@ func (kbus *KBUS) readBytes() ([]byte, error) {
 	if n == 0 {
 		return nil, nil
 	}
-	if err != nil {
-		return buf, err
-	}
-
-	return buf[:n], nil
+	return buf[:n], err
 }
