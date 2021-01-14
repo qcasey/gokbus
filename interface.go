@@ -1,7 +1,6 @@
 package gokbus
 
 import (
-	"fmt"
 	"time"
 
 	"github.com/tarm/serial"
@@ -14,6 +13,7 @@ type KBUS struct {
 
 	ReadChannel  chan Packet
 	WriteChannel chan Packet
+	ErrorChannel chan error
 	Port         *serial.Port
 }
 
@@ -39,28 +39,16 @@ func New(devicePath string, baudrate int) (*KBUS, error) {
 		Port:         s,
 		ReadChannel:  make(chan Packet, 1),
 		WriteChannel: make(chan Packet, 1),
+		ErrorChannel: make(chan error, 1),
 	}
 
 	return newKbus, nil
 }
 
-// Start will block, reading and writing packets to the KBus with the provided channels
+// Start will begin reading and writing packets to the KBus with the provided channels
 func (kbus *KBUS) Start() {
-	fmt.Println("starting")
-	for {
-		newPacket, err := kbus.ReadPacket()
-		if err == nil {
-			kbus.ReadChannel <- newPacket
-		}
-
-		select {
-		case p := <-kbus.WriteChannel:
-			p.addLength().addChecksum() // ensure metadata is valid
-			kbus.WritePacket(p)
-		default:
-			continue
-		}
-	}
+	go kbus.startReader()
+	go kbus.startWriter()
 }
 
 // Close the KBUS port
