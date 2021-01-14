@@ -59,8 +59,7 @@ func (kbus *KBUS) Start() {
 			if newPacket.isEmpty {
 				select {
 				case p := <-kbus.WriteChannel:
-					p.addLength().addChecksum() // ensure metadata is valid
-					kbus.WritePacket(p)
+					go kbus.WritePacket(p)
 					continue
 				default:
 					continue
@@ -141,6 +140,7 @@ func (kbus *KBUS) ReadPacket() (Packet, error) {
 
 // WritePacket will attempt to write a packet to the kbus
 func (kbus *KBUS) WritePacket(p Packet) (int, error) {
+	p.addLength().addChecksum() // ensure metadata is valid
 	flatPacket := p.Flatten()
 
 	n, err := kbus.Port.Write(flatPacket)
