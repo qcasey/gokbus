@@ -6,15 +6,15 @@ import (
 )
 
 // Waits for the bus to clear, then returns the Source of the next packet
-func (kbus *KBUS) getSourceByte() (byte, error) {
+func (kbus *KBUS) getSourceByte() (byte, bool) {
 	var lastByteRecievedTime = time.Now()
 	for {
 		srcPacket, err := kbus.readBytes()
 		if len(srcPacket) == 0 || err != nil {
-			return 0, fmt.Errorf("Bus is empty")
+			return 0, true
 		}
 		if time.Since(lastByteRecievedTime) > time.Millisecond*10 {
-			return srcPacket[0], nil
+			return srcPacket[0], false
 		}
 
 		lastByteRecievedTime = time.Now()

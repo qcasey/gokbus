@@ -47,8 +47,33 @@ func New(devicePath string, baudrate int) (*KBUS, error) {
 
 // Start will begin reading and writing packets to the KBus with the provided channels
 func (kbus *KBUS) Start() {
-	go kbus.startReader()
-	go kbus.startWriter()
+	go func() {
+		for {
+			newPacket, err := kbus.ReadPacket()
+			if err != nil {
+				kbus.addError(err)
+			}
+
+			// Only write new packets when the bus is empty
+			if newPacket.isEmpty {
+				select {
+				case p := <-kbus.WriteChannel:
+					p.addLength().addChecksum() // ensure metadata is valid
+					kbus.WritePacket(p)
+					continue
+				default:
+					continue
+				}
+			}
+
+			select {
+			case kbus.ReadChannel <- newPacket:
+				continue
+			default:
+				continue
+			}
+		}
+	}()
 }
 
 // Close the KBUS port
@@ -56,13 +81,14 @@ func (kbus *KBUS) Close() {
 	kbus.Port.Close()
 }
 
-// ReadPacket will block until it either recieves the next Packet or times out because of an empty bus
+// ReadPacket will block until the next Packet is recieved or times out because of an empty bus
 func (kbus *KBUS) ReadPacket() (Packet, error) {
 	var err error
 	p := Packet{}
 
-	p.Source, err = kbus.getSourceByte()
-	if err != nil {
+	p.Source, p.isEmpty = kbus.getSourceByte()
+	// Flag packet as empty, return
+	if p.isEmpty {
 		return p, err
 	}
 

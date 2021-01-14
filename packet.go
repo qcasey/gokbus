@@ -13,6 +13,7 @@ type Packet struct {
 	Destination byte
 	Data        []byte
 	checksum    byte
+	isEmpty     bool
 }
 
 func (p *Packet) getChecksum() byte {
@@ -53,7 +54,7 @@ func (p *Packet) Flatten() []byte {
 // IsValid checks a recieved Packet's checksum to ensure it was transmitted correctly
 // This will fail on our own generated packets, since those haven't been given a Checksum or Length yet
 func (p *Packet) IsValid() bool {
-	return p.getChecksum() == p.checksum
+	return !p.isEmpty && p.getChecksum() == p.checksum
 }
 
 // Pretty returns a well formatted string of the packet, with ECU locations resolved. Format: SOURCE -> DEST (LEN) DATA [CHECKSUM]
