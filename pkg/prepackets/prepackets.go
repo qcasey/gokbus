@@ -10,6 +10,12 @@ var PressMode = []gokbus.Packet{
 		Destination: 0x68,
 		Data:        []byte{0x48, 0x23},
 	},
+	// HOLD
+	{
+		Source:      0xF0,
+		Destination: 0x68,
+		Data:        []byte{0x48, 0x63},
+	},
 	// RELEASE
 	{
 		Source:      0xF0,
@@ -234,6 +240,12 @@ var PressStereoPower = []gokbus.Packet{
 		Source:      0xF0,
 		Destination: 0x68,
 		Data:        []byte{0x48, 0x06},
+	},
+	// HOLD
+	{
+		Source:      0xF0,
+		Destination: 0x68,
+		Data:        []byte{0x48, 0x46},
 	},
 	// RELEASE
 	{
