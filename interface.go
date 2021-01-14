@@ -52,6 +52,7 @@ func (kbus *KBUS) Start() {
 			newPacket, err := kbus.ReadPacket()
 			if err != nil {
 				kbus.addError(err)
+				continue
 			}
 
 			// Only write new packets when the bus is empty
