@@ -89,18 +89,26 @@ func (kbus *KBUS) ReadPacket() (Packet, error) {
 	p.Source, p.isEmpty = kbus.getSourceByte()
 	// Flag packet as empty, return
 	if p.isEmpty {
-		return p, err
+		return p, nil
 	}
 
 	length, err := kbus.readBytes()
 	if err != nil {
 		return p, err
 	}
+	if length == nil {
+		p.isEmpty = true
+		return p, nil
+	}
 	p.length = length[0]
 
 	destination, err := kbus.readBytes()
 	if err != nil {
 		return p, err
+	}
+	if destination == nil {
+		p.isEmpty = true
+		return p, nil
 	}
 	p.Destination = destination[0]
 
@@ -109,6 +117,10 @@ func (kbus *KBUS) ReadPacket() (Packet, error) {
 	checksum, err := kbus.readBytes()
 	if err != nil {
 		return p, err
+	}
+	if checksum == nil {
+		p.isEmpty = true
+		return p, nil
 	}
 	p.checksum = checksum[0]
 

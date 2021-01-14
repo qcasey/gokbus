@@ -1,7 +1,6 @@
 package gokbus
 
 import (
-	"fmt"
 	"time"
 )
 
@@ -10,7 +9,7 @@ func (kbus *KBUS) getSourceByte() (byte, bool) {
 	var lastByteRecievedTime = time.Now()
 	for {
 		srcPacket, err := kbus.readBytes()
-		if len(srcPacket) == 0 || err != nil {
+		if srcPacket == nil || err != nil {
 			return 0, true
 		}
 		if time.Since(lastByteRecievedTime) > time.Millisecond*10 {
@@ -26,7 +25,7 @@ func (kbus *KBUS) getDataBytes(length int) []byte {
 	var returnBytes []byte
 	for i := 0; i < length; i++ {
 		newByte, err := kbus.readBytes()
-		if err != nil || len(newByte) == 0 {
+		if err != nil || newByte == nil {
 			continue
 		}
 		returnBytes = append(returnBytes, newByte[0])
@@ -42,11 +41,16 @@ func (kbus *KBUS) readBytes() ([]byte, error) {
 	)
 
 	timeout := time.Now()
-	// Read until there is activity on the bus, or 500ms have passed
+	// Read until there is activity on the bus, or 200ms have passed
 	for {
 		n, err = kbus.Port.Read(buf)
-		if time.Since(timeout) > time.Millisecond*500 {
-			return buf, fmt.Errorf("Timed out reading kbus, the bus is likely quiet")
+		if err != nil {
+			return buf, err
+		}
+
+		// Timed out reading kbus, the bus is likely quiet
+		if time.Since(timeout) > time.Millisecond*200 {
+			return nil, nil
 		}
 		if err == nil {
 			break
