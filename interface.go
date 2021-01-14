@@ -112,7 +112,12 @@ func (kbus *KBUS) ReadPacket() (Packet, error) {
 	}
 	p.Destination = destination[0]
 
-	p.Data = kbus.getDataBytes(int(p.length) - 2)
+	data := kbus.getDataBytes(int(p.length) - 2)
+	if data == nil {
+		p.isEmpty = true
+		return p, nil
+	}
+	p.Data = data
 
 	checksum, err := kbus.readBytes()
 	if err != nil {

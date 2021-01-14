@@ -26,7 +26,7 @@ func (kbus *KBUS) getDataBytes(length int) []byte {
 	for i := 0; i < length; i++ {
 		newByte, err := kbus.readBytes()
 		if err != nil || newByte == nil {
-			continue
+			return nil
 		}
 		returnBytes = append(returnBytes, newByte[0])
 	}
