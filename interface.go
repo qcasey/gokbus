@@ -94,6 +94,7 @@ func (kbus *KBUS) ReadPacket() (Packet, error) {
 		p.isEmpty = true
 		return p, nil
 	}
+	p.Source = source[0]
 
 	length, err := kbus.readBytes()
 	if err != nil {
