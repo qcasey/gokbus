@@ -46,21 +46,13 @@ func (kbus *KBUS) readBytes() ([]byte, error) {
 		err error
 	)
 
-	timeout := time.Now()
 	// Read until there is activity on the bus, or 200ms have passed
-	for {
-		n, err = kbus.Port.Read(buf)
-		if err != nil {
-			return buf, err
-		}
-
-		// Timed out reading kbus, the bus is likely quiet
-		if time.Since(timeout) > time.Millisecond*200 {
-			return nil, nil
-		}
-		if err == nil {
-			break
-		}
+	n, err = kbus.Port.Read(buf)
+	if n == 0 {
+		return nil, nil
+	}
+	if err != nil {
+		return buf, err
 	}
 
 	return buf[:n], nil
