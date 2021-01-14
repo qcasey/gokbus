@@ -86,9 +86,12 @@ func (kbus *KBUS) ReadPacket() (Packet, error) {
 	var err error
 	p := Packet{}
 
-	p.Source, p.isEmpty = kbus.getSourceByte()
-	// Flag packet as empty, return
-	if p.isEmpty {
+	source, err := kbus.getSourceByte()
+	if err != nil {
+		return p, err
+	}
+	if source == nil {
+		p.isEmpty = true
 		return p, nil
 	}
 
