@@ -41,13 +41,9 @@ func (kbus *KBUS) getDataBytes(length int) ([]byte, error) {
 
 func (kbus *KBUS) readBytes() ([]byte, error) {
 	buf := make([]byte, 32)
-	var (
-		n   int
-		err error
-	)
 
 	// Read until there is activity on the bus, or 200ms have passed
-	n, err = kbus.Port.Read(buf)
+	n, err := kbus.Port.Read(buf)
 	if n == 0 {
 		return nil, nil
 	}
