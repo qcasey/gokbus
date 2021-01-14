@@ -55,7 +55,7 @@ func (kbus *KBUS) Start() {
 				continue
 			}
 
-			// Only write new packets when the bus is empty
+			// Only write new packet when the bus is empty
 			if newPacket.isEmpty {
 				select {
 				case p := <-kbus.WriteChannel:
