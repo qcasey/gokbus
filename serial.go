@@ -21,16 +21,19 @@ func (kbus *KBUS) getSourceByte() (byte, bool) {
 }
 
 // Gets the remaining packets in this data stream
-func (kbus *KBUS) getDataBytes(length int) []byte {
+func (kbus *KBUS) getDataBytes(length int) ([]byte, error) {
 	var returnBytes []byte
 	for i := 0; i < length; i++ {
 		newByte, err := kbus.readBytes()
-		if err != nil || newByte == nil {
-			return nil
+		if err != nil {
+			return nil, err
+		}
+		if newByte == nil {
+			return nil, nil
 		}
 		returnBytes = append(returnBytes, newByte[0])
 	}
-	return returnBytes
+	return returnBytes, nil
 }
 
 func (kbus *KBUS) readBytes() ([]byte, error) {

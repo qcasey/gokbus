@@ -25,7 +25,7 @@ func New(devicePath string, baudrate int) (*KBUS, error) {
 		Size:        serial.DefaultSize,
 		StopBits:    serial.Stop1,
 		Parity:      serial.ParityEven,
-		ReadTimeout: time.Millisecond * 500,
+		ReadTimeout: time.Millisecond * 200,
 	}
 
 	s, err := serial.OpenPort(&serialConfig)
@@ -112,7 +112,10 @@ func (kbus *KBUS) ReadPacket() (Packet, error) {
 	}
 	p.Destination = destination[0]
 
-	data := kbus.getDataBytes(int(p.length) - 2)
+	data, err := kbus.getDataBytes(int(p.length) - 2)
+	if err != nil {
+		return p, err
+	}
 	if data == nil {
 		p.isEmpty = true
 		return p, nil
